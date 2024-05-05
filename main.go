@@ -25,7 +25,7 @@ func main() {
 		fmt.Fprint(w, "stkn posting")
 	})
 
-	err := http.ListenAndServe(":4000", mux)
+	err := http.ListenAndServe("", mux)
 	if err != nil {
 		log.Fatal(err)
 	}
