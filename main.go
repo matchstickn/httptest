@@ -9,19 +9,19 @@ import (
 func main() {
 	mux := http.NewServeMux()
 
-	mux.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("/api", func(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprint(w, "stkn anything")
 	})
 
-	mux.HandleFunc("GET /", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("GET /api", func(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprint(w, "stkn getting")
 	})
 
-	mux.HandleFunc("GET /test", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("GET /api/test", func(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprint(w, "stkn getting test")
 	})
 
-	mux.HandleFunc("POST /", func(w http.ResponseWriter, r *http.Request) {
+	mux.HandleFunc("POST /api", func(w http.ResponseWriter, r *http.Request) {
 		fmt.Fprint(w, "stkn posting")
 	})
 
