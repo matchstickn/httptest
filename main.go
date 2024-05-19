@@ -28,8 +28,9 @@ func main() {
 		if err != nil {
 			fmt.Fprint(w, err)
 			log.Println(err)
+		} else {
+			fmt.Fprint(w, string(json_outcome))
 		}
-		fmt.Fprint(w, string(json_outcome))
 	}))
 
 	port := ":4000"
