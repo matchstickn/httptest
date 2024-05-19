@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
@@ -18,8 +19,17 @@ func main() {
 
 	router.HandleFunc("/api/{item}/", middle.Logger(func(w http.ResponseWriter, r *http.Request) {
 		item := r.PathValue("item")
-		outcome := rps.Play(item)
-		fmt.Fprint(w, outcome)
+		outcome, err := rps.Play(item)
+		if err != nil {
+			fmt.Fprint(w, err)
+			log.Println(err)
+		}
+		json_outcome, err := json.Marshal(outcome)
+		if err != nil {
+			fmt.Fprint(w, err)
+			log.Println(err)
+		}
+		fmt.Fprint(w, string(json_outcome))
 	}))
 
 	port := ":4000"
