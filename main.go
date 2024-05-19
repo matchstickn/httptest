@@ -23,13 +23,14 @@ func main() {
 		if err != nil {
 			fmt.Fprint(w, err)
 			log.Println(err)
-		}
-		json_outcome, err := json.Marshal(outcome)
-		if err != nil {
-			fmt.Fprint(w, err)
-			log.Println(err)
 		} else {
-			fmt.Fprint(w, string(json_outcome))
+			json_outcome, err := json.Marshal(outcome)
+			if err != nil {
+				fmt.Fprint(w, err)
+				log.Println(err)
+			} else {
+				fmt.Fprint(w, string(json_outcome))
+			}
 		}
 	}))
 
