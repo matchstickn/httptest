@@ -1,34 +1,57 @@
 package rps
 
 import (
+	"fmt"
 	"math/rand"
 	"strings"
 )
 
+type rpsdata struct {
+	Winner        string `json:"winner"`
+	Loser         string `json:"loser"`
+	Winner_choice string `json:"winner_choice"`
+	Loser_choice  string `json:"loser_choice"`
+}
+
 func Get_User(user_choice string) string {
-	user_choice = strings.ToLower(user_choice[0:1])
+	user_choice = strings.ToLower(user_choice)
 	return user_choice
 }
 
 func Validate(user_choice string) bool {
-	return user_choice == "r" || user_choice == "p" || user_choice == "s"
+	return user_choice == "rock" || user_choice == "paper" || user_choice == "scissors"
 }
 
-func Winner(user_choice string, bot_choice string) string {
+func Winner(user_choice string, bot_choice string) rpsdata {
 	if user_choice == bot_choice {
-		return "It's a draw!"
-	} else if (user_choice == "r" && bot_choice == "s") || (user_choice == "p" && bot_choice == "r") || (user_choice == "s" && bot_choice == "p") {
-		return "User wins!"
+		return rpsdata{
+			Winner:        "None",
+			Loser:         "None",
+			Winner_choice: user_choice,
+			Loser_choice:  bot_choice,
+		}
+	} else if (user_choice == "rock" && bot_choice == "scissors") || (user_choice == "paper" && bot_choice == "rock") || (user_choice == "scissors" && bot_choice == "paper") {
+		return rpsdata{
+			Winner:        "User",
+			Loser:         "Bot",
+			Winner_choice: user_choice,
+			Loser_choice:  bot_choice,
+		}
 	} else {
-		return "Bot wins!"
+		return rpsdata{
+			Winner:        "Bot",
+			Loser:         "User",
+			Winner_choice: user_choice,
+			Loser_choice:  bot_choice,
+		}
 	}
 }
 
-func Play(user_choice string) string {
-	bot_choice := []string{"r", "p", "s"}[rand.Intn(3)]
+func Play(user_choice string) (rpsdata, error) {
+	bot_choice := []string{"rock", "paper", "scissors"}[rand.Intn(3)]
 	user_choice = Get_User(user_choice)
 	if !Validate(user_choice) {
-		return "not a real choice"
+		return rpsdata{}, fmt.Errorf("not a valid input")
 	}
-	return Winner(user_choice, bot_choice)
+	return Winner(user_choice, bot_choice), nil
 }
