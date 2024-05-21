@@ -7,6 +7,7 @@ import (
 )
 
 type rpsdata struct {
+	Outcome       string `json:"outcome"`
 	Winner        string `json:"winner"`
 	Loser         string `json:"loser"`
 	Winner_choice string `json:"winner_choice"`
@@ -25,6 +26,7 @@ func Validate(user_choice string) bool {
 func Winner(user_choice string, bot_choice string) rpsdata {
 	if user_choice == bot_choice {
 		return rpsdata{
+			Outcome:       "Tie",
 			Winner:        "None",
 			Loser:         "None",
 			Winner_choice: user_choice,
@@ -32,6 +34,7 @@ func Winner(user_choice string, bot_choice string) rpsdata {
 		}
 	} else if (user_choice == "rock" && bot_choice == "scissors") || (user_choice == "paper" && bot_choice == "rock") || (user_choice == "scissors" && bot_choice == "paper") {
 		return rpsdata{
+			Outcome:       "User Wins!",
 			Winner:        "User",
 			Loser:         "Bot",
 			Winner_choice: user_choice,
@@ -39,10 +42,11 @@ func Winner(user_choice string, bot_choice string) rpsdata {
 		}
 	} else {
 		return rpsdata{
+			Outcome:       "Bot Wins!",
 			Winner:        "Bot",
 			Loser:         "User",
-			Winner_choice: user_choice,
-			Loser_choice:  bot_choice,
+			Winner_choice: bot_choice,
+			Loser_choice:  user_choice,
 		}
 	}
 }
