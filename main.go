@@ -17,7 +17,7 @@ func main() {
 		fmt.Fprint(w, "getting test")
 	}))
 
-	router.HandleFunc("/api/{item}/", middle.Logger(func(w http.ResponseWriter, r *http.Request) {
+	router.HandleFunc("GET /api/{item}/", middle.Logger(func(w http.ResponseWriter, r *http.Request) {
 		item := r.PathValue("item")
 		outcome, err := rps.Play(item)
 		if err != nil {
