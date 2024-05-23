@@ -18,20 +18,22 @@ func main() {
 	}))
 
 	router.HandleFunc("GET /api/{item}/", middle.Logger(func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "application/json")
 		item := r.PathValue("item")
 		outcome, err := rps.Play(item)
 		if err != nil {
 			fmt.Fprint(w, err)
 			log.Println(err)
-		} else {
-			json_outcome, err := json.Marshal(outcome)
-			if err != nil {
-				fmt.Fprint(w, err)
-				log.Println(err)
-			} else {
-				fmt.Fprint(w, string(json_outcome))
-			}
+			return
 		}
+		json_outcome, err := json.Marshal(outcome)
+		if err != nil {
+			fmt.Fprint(w, err)
+			log.Println(err)
+			return
+		}
+		fmt.Fprint(w, string(json_outcome))
+
 	}))
 
 	port := ":4000"
