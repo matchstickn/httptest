@@ -26,7 +26,7 @@ func Validate(user_choice string) bool {
 func Winner(user_choice string, bot_choice string) rpsdata {
 	if user_choice == bot_choice {
 		return rpsdata{
-			Outcome:       "Tie",
+			Outcome:       "It's a Tie!",
 			Winner:        "None",
 			Loser:         "None",
 			Winner_choice: user_choice,
