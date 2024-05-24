@@ -18,6 +18,7 @@ func main() {
 	}))
 
 	router.HandleFunc("GET /api/{item}/", middle.Logger(func(w http.ResponseWriter, r *http.Request) {
+		middle.CORS(w)
 		w.Header().Set("Content-Type", "application/json")
 		item := r.PathValue("item")
 		outcome, err := rps.Play(item)
