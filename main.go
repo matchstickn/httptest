@@ -13,14 +13,17 @@ import (
 func main() {
 	router := http.NewServeMux()
 
-	router.HandleFunc("/api/test", middle.Logger(func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprint(w, "getting test")
-	}))
+	home_page := http.FileServer(http.Dir("./"))
 
-	router.HandleFunc("GET /api/{item}/", middle.Logger(func(w http.ResponseWriter, r *http.Request) {
+	router.Handle("/", home_page)
+	router.HandleFunc("GET /api/rps/{item}/", middle.Logger(func(w http.ResponseWriter, r *http.Request) {
 		middle.CORS(w)
 		w.Header().Set("Content-Type", "application/json")
 		item := r.PathValue("item")
+		if item == "hi" {
+			fmt.Fprint(w, "Rock Paper Scissors api \nReplace /hi to paths /rock, /paper, /scissors to choose your input \nThe bot automatically chooses a random input")
+			return
+		}
 		outcome, err := rps.Play(item)
 		if err != nil {
 			fmt.Fprint(w, err)
